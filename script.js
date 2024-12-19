@@ -1,19 +1,18 @@
-//key f7cd41ecfbc82597def2c568185d98cc
+const key = 'f7cd41ecfbc82597def2c568185d98cc' 
 
-
-
-//key f7cd41ecfbc82597def2c568185d98cc
+//take in an input of kelvin and convert it farenheit
 function convertKtoF(input){
     return (((input - 273.15) * (9/5)) + 32).toFixed(2)
 }
 
 
 async function getData(city) {
-    let endpoint = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=f7cd41ecfbc82597def2c568185d98cc'
+    let endpoint = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + key
     const request = await fetch(endpoint);
     const response = await request.json();
     console.log(response);
 
+    //get elements from html
     const button = document.getElementById("b");
     const form = document.getElementById("form");
     const t = document.getElementById("t");
@@ -28,9 +27,11 @@ async function getData(city) {
         //convert m/s to f/s
         let speed = response.wind.speed * 3.28084
 
-        //convert Feels like
+        //convert Feels like to faren
         let feels_like = convertKtoF(response.main.feels_like)
         speed = speed.toFixed(2);
+
+        //update p tags in html
         t.textContent = "Temperature: " + temp + " " + unescape('%BA') + "f";
         f.textContent = "Feels Like: " + feels_like + " " + unescape('%BA') + "f";;
         d.textContent = "Description: " + response.weather[0].description;
